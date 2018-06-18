@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     body {
+       width: 310px;
+     }
+     #main {
+       width: 300px;
+       text-align: center;
+       padding: 5px;
+       border:1px solid #cccccc;
+       background-color: #f8f8f8;
+       border-radius: 5px;
+       transition: 0.3s;
+       transition-timing-function: ease-in;
+       opacity: 0;
+     }
+     #shorturltext {
+       margin-right: 15px;
+     }
+     #href {
+       color: hsl(206.1, 79.3%, 52.7%);
+       cursor: pointer;
+       border-radius: 2px;
+       padding: 4px 6px;
+     }
+     .clicked {
+       opacity: 1;
+       animation-duration: 0.8s;
+       animation-name: clickedcolor;
+       transition-timing-function: ease-in;
+     }
+     @keyframes clickedcolor {
+       from { background-color: #f8f8f8 }
+       to { background-color: #dddddd }
+     }
+     :link { color: hsl(206.1, 79.3%, 52.7%); }
+    </style>
+  </head>
+  <body>
+    <div id="main"><span id="shorturltext"></span><span id="href">COPY</a></div>
+    <script src="popup.js"></script>
+  </body>
+</html>
+
