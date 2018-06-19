@@ -50,21 +50,25 @@
         if(title.match(/#/) !== null) {
             title = title.replace(/#.*/, '');
         }
-        
-        const info = await getInfo(subDomain, title);
-
-        try {
-            let infoObj = JSON.parse(info);
-            const pageid = infoObj.query.pages[0].pageid;
-            shortURL = SHORT_URL.replace(/%%PAGEID%%/, pageid).replace(/%%LANG%%/, subDomain);        
-        } catch(e) {
-             errorFl = true;
+        if(title != '') {
+            const info = await getInfo(subDomain, title);
+            
+            try {
+                let infoObj = JSON.parse(info);
+                const pageid = infoObj.query.pages[0].pageid;
+                shortURL = SHORT_URL.replace(/%%PAGEID%%/, pageid).replace(/%%LANG%%/, subDomain);        
+            } catch(e) {
+                errorFl = true;
+            }
+        } else {
+            shortURL = tabURL.replace(/\/$/, '');
         }
     } else {
         shortURL = tabURL;
     }
+
     if(errorFl == false) {
-        shortURLText.innerHTML = shortURL; 
+        shortURLText.innerHTML = shortURL;
     } else {
         document.body.innerHTML = 'Something went wrong... Sorry.';
         document.body.style.setProperty('color', '#ff0000');
