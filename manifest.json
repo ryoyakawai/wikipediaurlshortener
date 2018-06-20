@@ -1,6 +1,6 @@
 {
     "name": "Wikipedia URL Shortener",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Make Wikipedia URL to be shorten by using Page ID.",
     "permissions": ["tabs", "activeTab", "declarativeContent"],
     "background": {
