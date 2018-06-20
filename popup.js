@@ -88,8 +88,8 @@
     };
 
     async function _fetchData(url) {
-        const header = {method: 'post'};
-        const data = await fetch(url);
+        const header = {method: 'POST', mode: 'cors'};
+        const data = await fetch(url, header);
         return data.text();
     }
     
