@@ -17,7 +17,8 @@
 (async function(){
     const API_ENDPOINT = 'https://%%LANG%%.wikipedia.org/w/api.php';
     const SHORT_URL = 'https://%%LANG%%.wikipedia.org/?curid=%%PAGEID%%';
-
+    const MAIN_WIDTH = 310;
+    
     let shortURL = null;
     let mainArea = document.querySelector('#main');
     let shortURLText = document.querySelector('#shorturltext');
@@ -41,15 +42,24 @@
         document.body.removeChild(el);
     };
 
-    const tabURL = await getTabURL();
+    let tabURL = await getTabURL();
+    let tURL = tabURL;
+    let anchor = '';
     let errorFl = false;
+    if(tURL.match(/#/) !== null) {
+        anchor = '#' + (tabURL.split('#').pop());
+        tabURL = tURL.replace(/#.*/, '');
+        let width = MAIN_WIDTH;
+        if(anchor!='') { width = width + 5 * anchor.length; }
+        document.querySelector('#main').style.setProperty('width', `${width}px`);
+    }
     if(tabURL.match(/wikipedia.org\/\?curid/)=== null) {
         let subDomain = tabURL.split('//').pop();
         subDomain = ((subDomain.split('/').shift()).split('.')).shift();
         let title = tabURL.split('/').pop();
-        if(title.match(/#/) !== null) {
-            title = title.replace(/#.*/, '');
-        }
+
+
+
         if(title != '') {
             const info = await getInfo(subDomain, title);
             
@@ -67,13 +77,17 @@
         shortURL = tabURL;
     }
 
+
     if(errorFl == false) {
-        shortURLText.innerHTML = shortURL;
+        shortURLText.innerHTML = shortURL + anchor;
     } else {
         document.body.innerHTML = 'Something went wrong... Sorry.';
         document.body.style.setProperty('color', '#ff0000');
     }
-    mainArea.style.setProperty('opacity', '1');
+    setTimeout(() => {
+        document.querySelector('#main').style.setProperty('transition', '0.3s');
+        mainArea.style.setProperty('opacity', '1');
+    }, 100);
 
     async function getTabURL() {
         return  new Promise( (resolve, reject) => {
